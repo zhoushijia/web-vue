@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div><input type="text" v-focus /></div>
+
+      <div><input type="text" v-color="msg" /></div>
+      <div><input type="text" v-color="{color:'blue'}" /></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 自定义属性，不传参数，inserted表示与行为相关的
+      Vue.directive('focus', {
+        inserted: function (el) {
+          el.focus()
+        }
+      })
+
+      //   传参数,bind 与样式相关
+      Vue.directive('color', {
+        bind: function (el, binding) {
+          console.log(binding)
+          //   binding.value拿到的是标签传来的对象或者是从data的属性中找
+          el.style.backgroundColor = binding.value.color
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: { msg: { color: 'red' } },
+        methods: {}
+      })
+    </script>
+  </body>
+</html>
