@@ -17,6 +17,11 @@
       const vm = new Vue({
         el: '#app',
         data: { firstName: 'aaa', lastName: 'bbb', fullName: 'aaa bbb' },
+        // computed: {
+        //   fullName: function () {
+        //     return this.firstName + ' ' + this.lastName
+        //   }
+        // },
         watch: {
           firstName: function (val) {
             this.fullName = val + ' ' + this.lastName
