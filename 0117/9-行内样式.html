@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 行内式 -->
+      <div v-bind:style="{border: borderStyle, width: widthStyle, height: heightStyle}">{{ msg }}</div>
+      <!-- 对象流 -->
+      <div v-bind:style="objStyles">{{ msg }}</div>
+      <button v-on:click="handle">切换</button>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+    <script>
+      Vue.config.keyCodes.aaa = 65
+      var vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'hello world',
+          borderStyle: '1px solid green',
+          widthStyle: '100px',
+          heightStyle: '100px',
+          objStyles: {
+            border: '1px solid green',
+            width: '100px',
+            height: '100px'
+          }
+        },
+        methods: {
+          handle: function () {
+            this.widthStyle = '200px'
+            this.objStyles.width = '200px'
+            this.objStyles.backgroundColor = 'orange'
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

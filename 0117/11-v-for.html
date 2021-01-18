@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <div v-for="(item,index) in fruits">{{item+'-----'+index}}</div>
+      <div v-for="item in other">{{item.name+'-----'+item.age}}</div>
+      <div :key="index" v-for="(item,index) in other">{{item+'----------'+index}}</div>
+      <div v-for="(value,key,index) in other">{{value+'------'+key+'----'+index}}</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#box',
+        data: {
+          fruits: ['apple', 'orange', 'banana', 'watermelon'],
+          other: [
+            { name: 'zs', age: 18 },
+            { name: 'ls', age: 18 },
+            { name: 'ww', age: 18 }
+          ]
+        },
+        methods: {}
+      })
+    </script>
+  </body>
+</html>

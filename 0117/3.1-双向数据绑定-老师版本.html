@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text">
+    <p></p>
+    <script>
+    // 需求：模拟双向数据绑定
+    const data = {
+        // 下划线开头的属性，一般约定表示私有的，不期望外部访问的
+        _msg: ''
+    };
+
+    // 也可以往对象上面添加属性
+    // 往 data 对象上面添加了一个属性叫 msg，当访问这个属性的时候，会自动触发内部的 get 方法，get 方法的返回值就是这个属性对应的值
+    Object.defineProperty(data, 'msg', {
+        get() {
+            // 这个 this 就是 data
+            return this._msg
+        },
+        // 当对 msg 属性进行赋值的时候，会自动的触发 set 方法，set 里面的第一个参数就是等号右边的值
+        set(newValue) {
+            this._msg = newValue;
+
+            oP.innerHTML = this._msg;
+            oInput.value = this._msg;
+        }
+    });
+
+    // #1 这里的赋值会触发 set 方法，所以 data 中 _msg 变成了 'hello world'
+    // data.msg = 'hello world';
+    // #2 这里的取值会触发 get 方法，get 方法的返回值就是 data._msg
+    // console.log(data.msg);
+    
+    const oP = document.querySelector('p');
+    const oInput = document.querySelector('input');
+
+    oInput.oninput = function(e) {
+        // 这一步的操作会反复触发 set 函数
+        data.msg = e.target.value;
+    };
+    </script>
+</body>
+</html>

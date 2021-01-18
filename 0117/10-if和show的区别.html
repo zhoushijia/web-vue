@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v-if和v-show</title>
+  </head>
+  <body>
+    <!--- v-show 本质就是标签 display 设置为 none，控制隐藏
+        - v-show 只编译一次，后面其实就是控制 css，而 v-if 不停的销毁和创建，故 v-show 性能更好一点
+        - v-if 是动态的向 DOM 树内添加或者删除 DOM 元素
+        - v-if 切换有一个局部编译/卸载的过程，切换过程中会销毁和重建内部的事件监听和子组件 -->
+    <div id="box">
+      <!-- 元素添加和删除 -->
+      <div v-if="flag">测试if</div>
+      <!-- 显示与隐藏 -->
+      <div v-show="flag">测试show</div>
+      <button v-on:click="handler">切换</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#box',
+        data: {
+          flag: false
+        },
+        methods: {
+          handler() {
+            this.flag = !this.flag
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

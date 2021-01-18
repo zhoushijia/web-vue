@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{msg}}</div>
+      <input type="text" v-bind:value="msg" v-on:input="handler" />
+    </div>
+    <script src="./js/vue-2.6.12.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: '鲁班七号，智障250'
+        },
+        methods: {
+          handler(e) {
+            //TODO: 这里采用事件对象来得到value值
+            this.msg = e.target.value
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <input type="text" v-on:keyup.s="submit" />
+    </div>
+    <script src="./js/vue-2.6.12.js"></script>
+    <script>
+      //TODO: 自定义按键修饰符
+      Vue.config.keyCodes.s = 83
+      const vm = new Vue({
+        el: '#box',
+        data: {},
+        methods: {
+          submit() {
+            console.log('提交')
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

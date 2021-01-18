@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>伪数组转换数组</title>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+      const divs = document.getElementsByTagName('div')
+      console.log(divs)
+      //   const arr = Array.prototype.slice.call(divs)
+      //   const arr = Array.from(divs)
+      const arr = [...divs]
+      console.log(arr)
+    </script>
+  </body>
+</html>

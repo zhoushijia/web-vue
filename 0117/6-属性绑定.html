@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 方式一： -->
+      <!-- <a v-bind:href="url">跳转</a> -->
+      <!-- 方式二 -->
+      <a v-bind:href="url">跳转</a>
+      <button v-on:click="handler">切换</button>
+    </div>
+
+    <script src="./js/vue-2.6.12.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          url: 'http://www.baidu.com'
+        },
+        methods: {
+          handler() {
+            this.url = 'http://www.qq.com'
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 解决闪烁问题，在编译完成前先隐藏 -->
+      <div v-cloak>{{msg}}</div>
+      <!-- 内容 也能解决闪烁问题 -->
+      <div v-text="msg"></div>
+      <!-- 解析标签  注意xss攻击 -->
+      <div v-html="xss"></div>
+      <!-- 跳过编译 -->
+      <div v-pre>{{msg}}</div>
+      <!-- 只编译一次 -->
+      <div v-once>{{msg}}</div>
+      <!-- 双向绑定 -->
+      <input type="text" v-model="msg" />
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        //   元素对象
+        el: '#app',
+        // 数据内容
+        data: {
+          msg: 'Hello Vue',
+          xss: `<img src="xxx" onerror="alert('垃圾网站')" />`
+        }
+      })
+    </script>
+  </body>
+</html>

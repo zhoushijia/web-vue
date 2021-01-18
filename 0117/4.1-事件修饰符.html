@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box">
+      <!-- 点击事件将只会触发一次 v-on:click.once="doThis"-->
+      <!-- 添加事件监听器时使用事件捕获模式，即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 v-on:click.capture="doThis"-->
+      <!-- v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。 -->
+      <!-- prevent阻止默认行为 -->
+      <!-- stop阻止冒泡 -->
+      <form v-on:submit.prevent="handler">
+        <input type="text" v-model="user" />
+        <input type="password" v-model="pwd" />
+        <button type="submit">提交</button>
+      </form>
+    </div>
+    <script src="./js/vue-2.6.12.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#box',
+        data: { user: '', pwd: '' },
+        methods: {
+          handler() {
+            console.log(this.user, this.pwd)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

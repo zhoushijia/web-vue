@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>自定义实现双向数据绑定</title>
+  </head>
+  <body>
+    <div>
+      <!-- view 区域 -->
+      <input type="text" />
+    </div>
+    <script>
+      // model 区域
+      const data = {
+        //TODO: 中间变量  用来存储数据
+        _info: ''
+      }
+
+      //   vm 区域
+      Object.defineProperty(data, 'msg', {
+        // 当data.msg时就会触发get
+        get() {
+          return this._info
+        },
+        // 当给data.msg赋值时就会触发set
+        // 当对 msg 属性进行赋值的时候，会自动的触发 set 方法，set 里面的第一个参数就是等号右边的值
+        set(newValue) {
+          // 给data.msg赋值
+          // model
+          this._info = newValue
+
+          // 给view框赋值
+          // view
+          inp.value = this._info
+        }
+      })
+
+      const inp = document.querySelector('input')
+      //   inp.value = data._info
+
+      //   view监听
+      inp.oninput = function (e) {
+        data.msg = e.target.value
+      }
+    </script>
+  </body>
+</html>

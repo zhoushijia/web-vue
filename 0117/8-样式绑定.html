@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        background-color: #f00;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 1.静态绑定 -->
+      <!-- <div class="active">样式绑定</div> -->
+      <!-- 2.动态绑定 -->
+      <!-- <div :class="active">样式绑定</div> -->
+      <!-- 3.动态绑定 -->
+      <!-- <div :class="isActive ? active :''">样式绑定</div> -->
+      <!-- 4.动态绑定 数组 -->
+      <!-- <div :class="[isActive ? active :'']">样式绑定</div> -->
+      <!-- 5.动态绑定 对象 -->
+      <!-- <div :class="{active:isActive}">样式绑定</div> -->
+      <!-- 6.动态绑定 数组+对象 -->
+      <div :class="[{active:isActive}]">样式绑定</div>
+      <button @click="handler">切换样式</button>
+    </div>
+
+    <script src="./js/vue-2.6.12.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          // 2.动态绑定
+          //   active: 'active',
+          isActive: true
+        },
+        methods: {
+          handler() {
+            this.isActive = !this.isActive
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
