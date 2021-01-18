@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{msg}}</div>
+      <button @click="update">更新</button>
+      <button @click="destroy">销毁</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: { msg: 'xxx' },
+        methods: {
+          update() {
+            this.msg = 'yyy'
+          },
+          destroy() {
+            this.$destroy()
+          }
+        },
+        // 1.挂载阶段
+        beforeCreate() {
+          console.log(this) //vm对象已存在
+          // 这里还没有data中的数据还没有初始化
+          console.log(this.msg) //undefined
+          console.log('beforeCreate')
+        },
+        created() {
+          //  已创建阶段 这里可以拿得data中的数据 --> 所以可以在该阶段尽早发请求
+          console.log(this.msg) //xxx
+          console.log('created')
+        },
+        beforeMount() {
+          // 渲染前
+          //TODO: $el
+          console.log(this.$el) //#app 标签对象
+          // 这里的app标签对象还没有渲染
+          console.log(this.$el.innerHTML) // <div>{{msg}}</div>
+          console.log('beforeMount')
+        },
+        mounted() {
+          // 已渲染  data中的数据已经渲染到页面上 --> 如果要尽早的获取渲染数据或dom操作，可以在这个阶段进行
+          console.log(this.$el.innerHTML) // <div>xxx</div>
+          console.log('mounted')
+        },
+        // 2.更新阶段
+        beforeUpdate() {
+          console.log('beforeUpdate')
+        },
+        updated() {
+          console.log('updated')
+        },
+        // 3.销毁阶段
+        beforeDestroy() {
+          console.log('beforeDestroy')
+        },
+        destroyed() {
+          console.log('destroyed')
+        }
+      })
+    </script>
+  </body>
+</html>
