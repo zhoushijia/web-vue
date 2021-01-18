@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数据的改变会影响视图</title>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <li v-for="item in color">{{item}}</li>
+      </ul>
+      <div>----------------</div>
+      <ul>
+        <li :key="item.id" v-for="item in obj">{{item}}</li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: { color: ['red', 'green', 'blue'], obj: { id: 1, name: 'zs', age: 18 } },
+        methods: {}
+      })
+      //   Vue.set 或 vm.$set 会刷新渲染 --> 重新渲染组件
+      //   无法挂载响应式数据-->不能渲染到页面上
+      //   vm.color[3] = 'black'
+      //   vm.$set(this.color, 3, 'black')  // 错误写法
+      //   方式1
+      //   vm.$set(vm.color, 3, 'black')
+      //   方式2
+      //   Vue.set(vm.color, 3, 'black')
+      //   无法挂载响应式数据-->不能渲染到页面上
+      //   vm.obj.sex = '男'
+      //   方式1
+      //   Vue.set(vm.obj, 'sex', '男')
+      //   方式2
+      vm.$set(vm.obj, 'sex', '女')
+    </script>
+  </body>
+</html>
