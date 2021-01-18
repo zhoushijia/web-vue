@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model.lazy="user" />
+      <span>{{tip}}</span>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          user: '',
+          tip: ''
+        },
+        methods: {
+          checkUser(user) {
+            setTimeout(() => {
+              //   if (this.user === 'admin') {
+              if (user === 'admin') {
+                this.tip = '用户已被注册'
+              } else {
+                this.tip = '用户名可以使用'
+              }
+            }, 2000)
+          }
+        },
+        watch: {
+          user: function (val) {
+            this.checkUser(val)
+            this.tip = '正在检验...'
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
