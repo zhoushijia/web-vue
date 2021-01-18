@@ -9,8 +9,8 @@
     <div id="box">
       <div v-for="(item,index) in fruits">{{item+'-----'+index}}</div>
       <div v-for="item in other">{{item.name+'-----'+item.age}}</div>
-      <div :key="index" v-for="(item,index) in other">{{item+'----------'+index}}</div>
-      <div v-for="(value,key,index) in other">{{value+'------'+key+'----'+index}}</div>
+      <!-- key值提高性能 -->
+      <div :key="index" v-for="(item,index) in other">{{item.name+'-----'+item.age+'-----'+index}}</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
