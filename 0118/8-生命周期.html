@@ -33,6 +33,8 @@
           console.log('beforeCreate')
         },
         created() {
+          // 这里还没有渲染
+          console.log(this.$el) // undefined
           //  已创建阶段 这里可以拿得data中的数据 --> 所以可以在该阶段尽早发请求
           console.log(this.msg) //xxx
           console.log('created')
