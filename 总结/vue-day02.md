@@ -14,7 +14,7 @@ v-if: 使用切换频率不高的情况，但是它可以配合 v-else 去使用
     <div>水果列表</div>
     <ul>
         <!-- <li v-for='item in fruits' :data-key="k()">{{item}}</li> -->
-        <li v-for='item in fruits' :key="k()+''">{{item}}</li>
+        <li v-for='item in fruits' :key="k()''">{{item}}</li>
     </ul>
 </div>
 <script src="js/vue.js"></script>
@@ -25,12 +25,11 @@ v-if: 使用切换频率不高的情况，但是它可以配合 v-else 去使用
             return i++;
         };
     };
-    const generatorK = k();
     const vm = new Vue({
         el: '#app',
         data: {
             fruits: ['apple', 'orange', 'banana'],
-            k: generatorK
+            k: k()
         }
     });
 </script>
