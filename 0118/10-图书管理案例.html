@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      .grid {
+        margin: auto;
+        width: 500px;
+        text-align: center;
+      }
+      .grid table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .grid th,
+      td {
+        padding: 10;
+        border: 1px dashed orange;
+        height: 35px;
+        line-height: 35px;
+      }
+      .grid th {
+        background-color: orange;
+      }
+      .grid .book {
+        padding-bottom: 10px;
+        padding-top: 5px;
+        background-color: #f3dcab;
+      }
+      .grid .total {
+        height: 30px;
+        line-height: 30px;
+        background-color: #f3dcab;
+        border-top: 1px solid #c2d89a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="managerBooks">
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <label for="id">图书id:</label><input type="text" id="id" v-model.trim="addId" :disabled="flag" v-focus /> <label for="name">名称:</label><input type="text" id="name" v-model.trim="addName" />
+            <button @click="addBook" :disabled="submitFlag">提交</button>
+          </div>
+          <div class="total">总数: {{totalBook}}</div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr :key="index" v-for="(item,index) in books">
+              <td>{{item.id}}</td>
+              <td>{{item.bname}}</td>
+              <td>{{item.date | dateFormat}}</td>
+              <td><a href="" @click.prevent="editBook(index)">修改</a> | <a href="" @click.prevent="delBook(index)">删除</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 日期过滤器
+      Vue.filter('dateFormat', function (val) {
+        const date = new Date(val)
+        const y = date.getFullYear()
+        const m = (date.getMonth() + 1).toString().padStart(2, 0)
+        const d = date.getDate().toString().padStart(2, 0)
+        return y + '-' + m + '-' + d
+      })
+      // 自定义指令
+      Vue.directive('focus', {
+        inserted: function (el) {
+          el.focus()
+        }
+      })
+
+      const vm = new Vue({
+        el: '#managerBooks',
+        data: {
+          //TODO: 用来标记是否是新增书籍/编辑图书
+          flag: false,
+          // TODO: 用来控制是否是新增书籍名字是否相同  有 bug 修改不了
+          submitFlag: false,
+          addId: '',
+          addName: '',
+          // 存储要修改和删除的id
+          index: '',
+          books: []
+        },
+        methods: {
+          // 添加图书
+          addBook() {
+            const book = { id: this.addId, bname: this.addName, date: new Date() }
+            if (!this.flag) {
+              if (this.addId && this.addName && !this.books.some((item) => this.addId == item.id) && !this.books.some((item) => item.bname == this.addName)) {
+                this.books.push(book)
+                console.log('添加成功')
+              } else {
+                console.log('添加失败')
+              }
+            } else {
+              this.books.splice(this.index, 1, book)
+              this.flag = false
+            }
+            this.addName = ''
+            this.addId = ''
+          },
+          // 编辑图书
+          editBook(index) {
+            this.flag = true
+            this.index = index
+            this.addName = this.books[index].bname
+            this.addId = this.books[index].id
+          },
+          // 删除图书
+          delBook(index) {
+            if (confirm('你确认删除吗')) this.books.splice(index, 1)
+          }
+        },
+        computed: {
+          totalBook() {
+            return this.books.length
+          }
+        },
+        watch: {
+          addName(val) {
+            // this.submitFlag = this.books.some((item) => item.bname == val) ? true : false
+          }
+        },
+        created() {
+          const data = [
+            {
+              id: 1,
+              bname: '三国演义',
+              date: 2525609975000
+            },
+            {
+              id: 2,
+              bname: '水浒传',
+              date: 2525609975000
+            },
+            {
+              id: 3,
+              bname: '红楼梦',
+              date: 2525609975000
+            },
+            {
+              id: 4,
+              bname: '西游记',
+              date: 2525609975000
+            }
+          ]
+          this.books = data
+        }
+      })
+    </script>
+  </body>
+</html>

@@ -13,17 +13,18 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       // 全局过滤器
-      //   Vue.filter('dateFommat', function (val,str) {
-      //    if (str) return val.getFullYear() + '-' + (val.getMonth() + 1) + '-' + val.getDate()
-      //   })
+      // Vue.filter('dateFommat', function (val, str) {
+      //   if (str) return val.getFullYear() + '-' + (val.getMonth() + 1) + '-' + val.getDate()
+      //   return val
+      // })
       const vm = new Vue({
         el: '#app',
         data: { date: new Date() },
-        methods: {},
         // 局部过滤器
         filters: {
           dateFommat: function (val, str) {
             if (str) return val.getFullYear() + '-' + (val.getMonth() + 1) + '-' + val.getDate()
+            return val
           }
         }
       })

@@ -18,12 +18,12 @@
       <!-- <div :class="active">样式绑定</div> -->
       <!-- 3.动态绑定 -->
       <!-- <div :class="isActive ? active :''">样式绑定</div> -->
-      <!-- 4.动态绑定 数组 -->
-      <!-- <div :class="[isActive ? active :'']">样式绑定</div> -->
+      <!-- 4.动态绑定 数组 isActive ?  :''-->
+      <div :class="[active,a,b]">样式绑定</div>
       <!-- 5.动态绑定 对象 -->
       <!-- <div :class="{active:isActive}">样式绑定</div> -->
       <!-- 6.动态绑定 数组+对象 -->
-      <div :class="[{active:isActive}]">样式绑定</div>
+      <!-- <div :class="[{active:isActive},a,b]">样式绑定</div> -->
       <button @click="handler">切换样式</button>
     </div>
 
@@ -33,7 +33,9 @@
         el: '#app',
         data: {
           // 2.动态绑定
-          //   active: 'active',
+          active: 'active',
+          a: 'ab',
+          b: 'xxx',
           isActive: true
         },
         methods: {
