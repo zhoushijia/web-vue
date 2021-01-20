@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test :title="msg"></test>
+      <!-- 写了required ，必须传title  -->
+      <!-- <test></test> -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('test', {
+        props: {
+          //   title: String,
+          //   title: [String, Number],
+          title: {
+            type: [String, Number],
+            required: true,
+            // default: 100
+            default: () => [1, 2]
+          }
+        },
+        template: `<div>{{title}}</div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: '哒哒哒'
+        }
+      })
+    </script>
+  </body>
+</html>

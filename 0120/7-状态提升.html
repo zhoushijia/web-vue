@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com1 :pmsg="msg"></test-com1>
+      <test-com2 @mod-msg="handler"></test-com2>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 组件1与父组件之间的数据进行父传子
+      Vue.component('test-com1', {
+        props: ['pmsg'],
+        data: function () {
+          return { msg: '我是组件1中的值' }
+        },
+        template: `<div>组件1：{{pmsg}}</div>`
+      })
+      // 组件2与父组件之间的数据进行子传父
+      Vue.component('test-com2', {
+        props: ['pmsg'],
+        data: function () {
+          return { msg: '我是组件2中的值' }
+        },
+        template: `<button @click="$emit('mod-msg',msg)">修改兄弟组件1的值</button>`
+      })
+      // 组件2中的数据提升到父组件(状态提升)：利用父类来实现兄弟数据传输
+      const vm = new Vue({
+        el: '#app',
+        data: { msg: '我是父组件中的值' },
+        methods: {
+          handler(val) {
+            this.msg = val
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

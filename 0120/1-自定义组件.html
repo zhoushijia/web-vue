@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 双标签 -->
+      <button-increment></button-increment>
+      <button-increment></button-increment>
+      <button-increment></button-increment>
+    </div>
+    <template id="mod1"> <button @click="handler">点击了{{count}}次</button> </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 自定义组件  全局组件
+      Vue.component('button-increment', {
+        data: function () {
+          // 返回的必须是一个对象,保证每个组件实例的数据是独立的,互不影响的
+          return { count: 0 }
+        },
+        // 必须只有一个根元素  模板中的数据不用this来调用
+        // template: '<button @click="handler">点击了{{count}}次</button>',
+        template: '#mod1',
+        methods: {
+          handler() {
+            this.count += 2
+          }
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {}
+        // 局部组件
+        // components: {
+        //   //   buttonIncrement: {
+        //   'button-increment': {
+        //     data: function () {
+        //       // 返回的必须是一个对象,保证每个组件实例的数据是独立的,互不影响的
+        //       return { count: 0 }
+        //     },
+        //     // 必须只有一个根元素
+        //     // template: '<button @click="handler">点击了{{count}}次</button>',
+        //     template: '#mod1',
+        //     methods: {
+        //       handler() {
+        //         this.count += 2
+        //       }
+        //     }
+        //   }
+        // }
+      })
+    </script>
+  </body>
+</html>

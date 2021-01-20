@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 方式一 $event 为 $emit("template-add",["peach",$event]) 传来的第二个参数 且后面不能再接受其传来的后续参数-->
+      <!-- 所以利用数组或者对象 -->
+      <!-- <test :arr="fruits" @template-add="handler($event)"></test> -->
+      <!-- 方式二 不加括号-->
+      <test :arr="fruits" @template-add="handler"></test>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      //  如果是简单数据类型，儿子绝对不能修改
+      //  如果是复杂数据类型，地址不能修改，里面的内容可以修改，但是建议还是通知父亲修改
+      Vue.component('test', {
+        props: ['arr'],
+        template: `<div>
+                      <ul>
+                          <li v-for="value in arr">{{value}}</li>
+                      </ul>
+                      <button @click='$emit("template-add","peach",$event)'>增加水果</button>
+                  </div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          fruits: ['apple', 'orange', 'banana']
+        },
+        methods: {
+          handler(val, e) {
+            // this.fruits.push(val[0])
+            // console.log(val[1])
+            this.fruits.push(val)
+            console.log(e)
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

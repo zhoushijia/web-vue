@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com1></test-com1>
+      <test-com2></test-com2>
+      <button @click="handler">销毁事件</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 事件中心
+      const hub = new Vue()
+      // 组件1
+      Vue.component('test-com1', {
+        data: function () {
+          return { num: 1 }
+        },
+        template: `<div>
+                        <div>Tom{{num}}</div>
+                        <button @click='handler'>操作jerry</button>
+                    </div>`,
+        methods: {
+          handler() {
+            // 在事件中心下挂载tom
+            hub.$emit('tom-com', this.num)
+          }
+        },
+        // TODO: 通过hub.$on 去监听事件
+        created() {
+          hub.$on('jerry-com', (val) => {
+            console.log(val)
+            this.num += val
+          })
+        }
+      })
+      // 组件2
+      Vue.component('test-com2', {
+        data: function () {
+          return { num: 2 }
+        },
+        template: `<div>
+                        <div>Jerry{{num}}</div>
+                        <button @click='handler'>操作Tom</button>
+                    </div>`,
+        methods: {
+          handler() {
+            // 在事件中心下挂载tom
+            hub.$emit('jerry-com', this.num)
+          }
+        },
+        // TODO: 通过hub.$on 去监听事件
+        created() {
+          hub.$on('tom-com', (val) => {
+            console.log(val)
+            this.num += val
+          })
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        methods: {
+          handler() {
+            hub.$off('jerry-com')
+            hub.$off('tom-com')
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

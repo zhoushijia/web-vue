@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <button-count :title-son="msg"></button-count>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('button-count', {
+        props: ['titleSon'],
+        data: function () {
+          return {
+            smsg: '儿子的信息'
+          }
+        },
+        template: `<div >
+                        <test :count-msg="smsg"></test>
+                        <div>{{smsg}}</div>
+                        <div>{{smsg}}</div>
+                        <div>{{titleSon}}</div>
+                    </div>`
+      })
+      Vue.component('test', {
+        props: ['countMsg'],
+        template: `<div>{{countMsg}}</div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'xxx'
+        }
+      })
+    </script>
+  </body>
+</html>
