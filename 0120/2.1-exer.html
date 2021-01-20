@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com1 :father-msg="msg"></test-com1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 父亲
+      Vue.component('test-com1', {
+        props: ['fatherMsg'],
+        data: function () {
+          return { num: 1 }
+        },
+        template: `<div>{{num}}<test-com2 :com1father-msg="fatherMsg"></test-com2></div>`
+      })
+      // 儿子
+      Vue.component('test-com2', {
+        // props: ['com1fatherMsg'],
+        props: { com1fatherMsg: { type: String, required: true, default: () => ['yyyy', 'zzzz'] } },
+
+        data: function () {
+          return { num: 2 }
+        },
+        template: `<div>{{num+'------'+com1fatherMsg}}</div>`
+      })
+      // 爷爷
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'xxx'
+        }
+      })
+    </script>
+  </body>
+</html>

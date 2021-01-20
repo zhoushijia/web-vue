@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com1 style="color: red"></test-com1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('test-com1', {
+        inheritAttrs: false,
+        data: function () {
+          return { num: 1 }
+        },
+        template: `<div>111<div v-bind="$attrs">222</div></div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'xxx'
+        }
+      })
+    </script>
+  </body>
+</html>

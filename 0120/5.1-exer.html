@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{msg}}</div>
+
+      <test-com @transfor-msg="handler"></test-com>
+      <test-com1 :f-msg="msg"></test-com1>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('test-com', {
+        data: function () {
+          return { msg: '组件1' }
+        },
+        template: `<div>{{msg}}<button @click="$emit('transfor-msg',msg)">子传父</button></div>`
+      })
+      Vue.component('test-com1', {
+        props: ['fMsg'],
+        data: function () {
+          return {
+            msg: '组件2'
+          }
+        },
+        template: `<div>{{msg+'----'+fMsg}}</div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          msg: 'father'
+        },
+        methods: {
+          handler(msg) {
+            this.msg = msg
+          }
+        }
+      })
+    </script>
+  </body>
+</html>

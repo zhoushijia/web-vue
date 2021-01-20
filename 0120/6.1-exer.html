@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <tom-com></tom-com>
+      <jerry-com></jerry-com>
+      <button @click="handler">销毁</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      //   事件中心
+      const middle = new Vue()
+      Vue.component('tom-com', {
+        data: function () {
+          return { num: 1 }
+        },
+        template: `<div><span>Tom{{num}}</span><button @click="handler">控制jerry</button></div>`,
+        methods: {
+          handler() {
+            // 传值给jerry
+            middle.$emit('jerry-change', 1)
+          }
+        },
+        // 监听事件中心
+        created() {
+          middle.$on('tom-change', (val) => {
+            this.num = val
+          })
+        }
+      })
+      Vue.component('jerry-com', {
+        data: function () {
+          return { num: 2 }
+        },
+        template: `<div><span>jerry{{num}}</span><button @click="handler">控制tom</button></div>`,
+        methods: {
+          handler() {
+            middle.$emit('tom-change', 2)
+          }
+        },
+        // 监听事件中心
+        created() {
+          middle.$on('jerry-change', (val) => {
+            this.num = val
+          })
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        methods: {
+          handler() {
+            middle.$off('jerry-change')
+            middle.$off('tom-change')
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
