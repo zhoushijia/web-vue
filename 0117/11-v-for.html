@@ -10,7 +10,10 @@
       <div v-for="(item,index) in fruits">{{item+'-----'+index}}</div>
       <div v-for="item in other">{{item.name+'-----'+item.age}}</div>
       <!-- key值提高性能 -->
-      <div :key="index" v-for="(item,index) in other">{{item.name+'-----'+item.age+'-----'+index}}</div>
+      <!-- !数组可以 item-index  -->
+      <div :key="item.id" v-for="(item,index) in other">{{item.name+'*****'+index}}</div>
+      <!-- !对象可以有key-value-index  -->
+      <div :key="key" v-for="(item,key,index) in obj">{{item+'==='+key+'==='+index}}</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -20,10 +23,15 @@
         data: {
           fruits: ['apple', 'orange', 'banana', 'watermelon'],
           other: [
-            { name: 'zs', age: 18 },
-            { name: 'ls', age: 18 },
-            { name: 'ww', age: 18 }
-          ]
+            { id: 1, name: 'zs', age: 18 },
+            { id: 2, name: 'ls', age: 18 },
+            { id: 3, name: 'ww', age: 18 }
+          ],
+          obj: {
+            name: '李斯',
+            age: 20,
+            gender: '男'
+          }
         },
         methods: {}
       })
