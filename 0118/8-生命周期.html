@@ -54,16 +54,22 @@
         },
         // 2.更新阶段
         beforeUpdate() {
+          // 在 beforeUpdate 生命周期函数执行的时候，已经可以拿到最新的数据，但还没渲染到视图中去。
+          console.log(this.$el.innerHTML)
           console.log('beforeUpdate')
         },
         updated() {
+          console.log(this.$el.innerHTML)
           console.log('updated')
         },
         // 3.销毁阶段
         beforeDestroy() {
+          console.log(this.msg)
           console.log('beforeDestroy')
         },
         destroyed() {
+          //TODO:？ 在 destroyed 生命周期函数执行的时候，实例已经完成销毁、此时 data 、methods 、指令等都不可用
+          console.log(this.msg)
           console.log('destroyed')
         }
       })
