@@ -19,6 +19,7 @@
         data: { msg: 'xxx' },
         methods: {
           update() {
+            console.log(1)
             this.msg = 'yyy'
           },
           destroy() {
@@ -64,12 +65,16 @@
         },
         // 3.销毁阶段
         beforeDestroy() {
-          console.log(this.msg)
-          console.log('beforeDestroy')
+          // console.log(this.msg)
+          // console.log('beforeDestroy')
         },
         destroyed() {
-          //TODO:？ 在 destroyed 生命周期函数执行的时候，实例已经完成销毁、此时 data 、methods 、指令等都不可用
+          //TODO:？ 在 destroyed 生命周期函数执行的时候，data 、methods 仍可用,实例已经完成销毁、指令等都不可用
+          // 该钩子被调用后，对应 Vue 实例的所有指令都被解绑，所有的事件监听器被移除，所有的子实例也都被销毁。
+          // data 可用
           console.log(this.msg)
+          // 方法可用
+          this.update()
           console.log('destroyed')
         }
       })
