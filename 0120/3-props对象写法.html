@@ -15,6 +15,13 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       Vue.component('test', {
+        // 1. 使用的时候通过属性传递值
+        // 2. 定义的时候通过 props 接收值
+
+        // 3. 在普通的 HTML 里面，传值时候如果使用的是短横线，接收的时候要使用驼峰
+        // 4. 在普通的 HTML 里面，传值时候（不区分大小写）如果使用的是驼峰，接收的时候要全小写
+
+        // 5. 在模板里面，传值的时候区分大小写，如果说使用的是驼峰，那么接收的时候还是要使用驼峰
         props: {
           //   title: String,
           //   title: [String, Number],
