@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .current {
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <test-com :list="list">
+        <!-- ! 老版本 slot-scope="scopeList" -->
+        <!-- <template slot-scope="scopeList"><div :key='item.id' v-for='item in scopeList.list'>{{item.name}}<div></template> -->
+        <!-- ! vue 2.6.0 写法 v-slot:default="scopeList" -->
+        <template v-slot:default="scopeList">
+          <div :key="item.id" v-for="item in scopeList.list">
+            <div v-if="item.id==2" class="current">{{item.name}}</div>
+            <div v-else>{{item.name}}</div>
+          </div>
+        </template>
+      </test-com>
+    </div>
+    <!-- 自定义组件模板 -->
+    <template id="fruit-com">
+      <div>
+        <!-- ! 属性传值 -->
+        <slot :list="list"></slot>
+      </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('test-com', {
+        props: ['list'],
+        template: '#fruit-com'
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          list: [
+            { id: 1, name: 'apple' },
+            { id: 2, name: 'orange' },
+            { id: 3, name: 'lemon' }
+          ]
+        }
+      })
+    </script>
+  </body>
+</html>
