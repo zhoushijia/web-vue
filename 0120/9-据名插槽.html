@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <base-layout>
+        <!-- ! vue 2.6.0版本以前的写法 -->
+        <!-- <template slot="header">
+          <p>头部标题</p>
+          <p>头部标题</p>
+        </template> -->
+        <!-- ! vue 2.6.0 语法 -->
+        <template v-slot:header>
+          <p>头部标题</p>
+          <p>头部标题</p>
+        </template>
+        <p>主题标题</p>
+        <p>主题标题</p>
+        <!-- ! v-slot就相当于# -->
+        <template #footer>
+          <p>底部标题</p>
+          <p>底部标题</p>
+        </template>
+      </base-layout>
+    </div>
+
+    <template id="base-layout">
+      <div>
+        <header>
+          <slot name="header">头部插槽</slot>
+        </header>
+        <main>
+          <slot>主体插槽</slot>
+        </main>
+        <footer>
+          <slot name="footer">底部插槽</slot>
+        </footer>
+      </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('base-layout', {
+        template: '#base-layout'
+      })
+      const vm = new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>
