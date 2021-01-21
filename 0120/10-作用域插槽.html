@@ -17,7 +17,7 @@
         <!-- <template slot-scope="scopeList"><div :key='item.id' v-for='item in scopeList.list'>{{item.name}}<div></template> -->
         <!-- ! vue 2.6.0 写法 v-slot:default="scopeList" -->
         <template v-slot:default="scopeList">
-          <div :key="item.id" v-for="item in scopeList.list">
+          <div :key="item.id" v-for="item in scopeList.lists">
             <div v-if="item.id==2" class="current">{{item.name}}</div>
             <div v-else>{{item.name}}</div>
           </div>
@@ -27,8 +27,8 @@
     <!-- 自定义组件模板 -->
     <template id="fruit-com">
       <div>
-        <!-- ! 属性传值 -->
-        <slot :list="list"></slot>
+        <!-- ! 属性传值 lists -->
+        <slot :lists="list"></slot>
       </div>
     </template>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
