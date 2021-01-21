@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const createPromise = (url) => {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.open('get', url)
+          xhr.send()
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState !== 4) return
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              resolve(xhr.responseText)
+            } else {
+              reject('fail')
+            }
+          }
+        })
+      }
+
+      const p = createPromise('http://127.0.0.1:3000/data')
+      const p1 = createPromise('http://127.0.0.1:3000/data1')
+      const p2 = createPromise('http://127.0.0.1:3000/data2')
+
+      // 等所有异步任务执行完，同时打印出所有结果
+      Promise.all([p, p1, p2]).then((results) => {
+        console.log(results)
+      })
+
+      // 只要有一个任务完成，立即打印出结果
+      Promise.race([p, p1, p2]).then((result) => {
+        console.log(result)
+      })
+
+      // promise 对象
+      Promise.resolve(true).then((data) => console.log(data))
+      Promise.resolve(null).then((data) => console.log(data))
+      Promise.resolve(undefined).then((data) => console.log(data))
+    </script>
+  </body>
+</html>
