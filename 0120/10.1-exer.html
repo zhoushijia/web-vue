@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com v-slot:default="scopeMsg">{{scopeMsg.msg}}</test-com>
+    </div>
+
+    <template id="test-com">
+      <div>
+        <div>我是{{msg}}</div>
+        <slot :msg="msg">我是默认值</slot>
+      </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.component('test-com', {
+        data() {
+          return { msg: 'son' }
+        },
+        template: '#test-com'
+      })
+      const vm = new Vue({
+        el: '#app'
+      })
+    </script>
+  </body>
+</html>
