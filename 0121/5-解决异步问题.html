@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /* const sum = (m, n) => {
+         setTimeout(() => {
+           return m + n
+         }, 1000)
+       }
+       console.log(sum(1, 2))  */ // undefined
+
+      //  利用回调函数解决异步问题
+      /* const sum = (m, n, callback) => {
+         setTimeout(() => {
+           callback(m + n)
+         }, 1000)
+       }
+       sum(1, 2, function (r) {
+         console.log(r) //3
+       }) */
+
+      //  promise 解决异步问题
+      const sum = (m, n) => {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            resolve(m + n)
+          }, 1000)
+        })
+      }
+
+      sum(1, 2).then((data) => console.log(data)) // 3
+
+      //  Asycn/Await
+    </script>
+  </body>
+</html>
