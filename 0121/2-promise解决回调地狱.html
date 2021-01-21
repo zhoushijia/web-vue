@@ -26,7 +26,7 @@
       resolveCB('http://127.0.0.1:3000/data')
         .then((data) => {
           console.log(data)
-          // 这里return的结果是作为外层函数then的返回值的
+          // 这里 return 的结果是作为外层函数 then 的返回值的
           return resolveCB('http://127.0.0.1:3000/data1')
         })
         .then((data) => {
@@ -35,6 +35,18 @@
         })
         .then((data) => {
           console.log(data)
+          // 这里 return 的结果是作为外层函数 then 的返回值的 即使是 常量
+          // Promise.resolve(data) 仍然是一个 promise 对象
+          // 这里就是将 then 返回的结果包装成了 Promise.resolve(data)
+          return data
+        })
+        .then((data) => {
+          console.log(data)
+          return data
+        })
+        .then((data) => {
+          console.log(data)
+          return data
         })
     </script>
   </body>
