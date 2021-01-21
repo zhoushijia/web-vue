@@ -26,6 +26,7 @@
       resolveCB('http://127.0.0.1:3000/data')
         .then((data) => {
           console.log(data)
+          // 这里return的结果是作为外层函数then的返回值的
           return resolveCB('http://127.0.0.1:3000/data1')
         })
         .then((data) => {
