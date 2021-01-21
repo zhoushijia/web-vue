@@ -20,9 +20,20 @@
       createPromise()
         .then((data) => {
           console.log(data)
+          // 出现reject 则跳转到 catch
+          return data
+        })
+        .then((data) => {
+          console.log(data)
+          return data
+        })
+        .then((data) => {
+          console.log(data)
+          return data
         })
         .catch((data) => {
           console.log(data)
+          return data
         })
         .finally(() => {
           console.log('finally')
