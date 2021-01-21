@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Promise 实例化对象参数需要传入函数,函数中有两个形参(resolve, reject)
+      // resolve 用来返回成功后的数值 ; reject 用来返回失败后的数值
+      const p = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          Math.random() > 0.5 ? resolve('成功') : reject('失败')
+        })
+      })
+      // promise 实例通过 then 方法执行成功或失败函数,来获得成功或失败后的结果
+      p.then(
+        (data) => {
+          console.log(data)
+        },
+        (err) => {
+          console.log(err)
+        }
+      )
+    </script>
+  </body>
+</html>
