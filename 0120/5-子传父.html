@@ -24,8 +24,17 @@
                       <ul>
                           <li v-for="value in arr">{{value}}</li>
                       </ul>
-                      <button @click='$emit("template-add","peach",$event)'>增加水果</button>
-                  </div>`
+                      <button @click='handler'>增加水果</button>
+                      
+                  </div>`,
+        // 方式一
+        // <button @click='$emit("template-add","peach",$event)'>增加水果</button>
+        // 方式二
+        methods: {
+          handler(e) {
+            this.$emit('template-add', 'peach', e)
+          }
+        }
       })
       const vm = new Vue({
         el: '#app',
