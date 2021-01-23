@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      //TODO: 请求拦截器 必须有返回值
+      axios.interceptors.request.use(
+        (config) => {
+          console.log(config.url)
+          config.headers.mytoken = 'hello'
+          return config
+        },
+        // 错误函数
+        (err) => err
+      )
+      // 响应拦截器
+      axios.interceptors.response.use(
+        (res) => {
+          console.log(res)
+          const data = res.data
+          return data
+        },
+        // 错误函数
+        (err) => err
+      )
+      axios.get('http://localhost:3000/adata').then((data) => console.log(data))
+    </script>
+  </body>
+</html>
