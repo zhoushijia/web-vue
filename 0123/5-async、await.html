@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      // 定义异步函数 async 函数是异步的,但是其内部 await 指令是同步的 返回的是一个promise
+      async function getData() {
+        // await 后跟的是一个 promise 对象 得到的结果(返回值)就是resolve的结果
+        // await 执行异步时 必须得等到该代码执行完 才会执行下条语句
+        const res = await axios.get('http://localhost:3000/adata')
+        return res.data
+      }
+      getData().then((data) => console.log(data))
+
+      function createPromise(url) {
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest()
+          xhr.open('get', url)
+          xhr.send()
+          xhr.onreadystatechange = () => {
+            if (xhr.readyState !== 4) return
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              resolve(xhr.responseText)
+            } else {
+              reject('fail')
+            }
+          }
+        })
+      }
+
+      // 异步函数 async 函数是异步的,但是其内部 await 指令是同步的
+      async function run() {
+        const p = await createPromise('http://127.0.0.1:3000/data')
+        const p1 = await createPromise('http://127.0.0.1:3000/data1')
+        const p2 = await createPromise('http://127.0.0.1:3000/data2')
+        console.log(p, p1, p2)
+      }
+
+      run()
+    </script>
+  </body>
+</html>
