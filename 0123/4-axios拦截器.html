@@ -11,6 +11,8 @@
       //TODO: 请求拦截器 必须有返回值
       axios.interceptors.request.use(
         (config) => {
+          config.url = 'http://localhost:3000' + config.url
+          console.log(config.method)
           console.log(config.url)
           config.headers.mytoken = 'hello'
           return config
@@ -28,7 +30,12 @@
         // 错误函数
         (err) => err
       )
-      axios.get('http://localhost:3000/adata').then((data) => console.log(data))
+      axios.get('/adata').then((data) => console.log(data))
+      //   axios({
+      //       method:'',
+      //       url:'',
+      //       data:'',
+      //   }).then()
     </script>
   </body>
 </html>
