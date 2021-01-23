@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 引入 axios 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+      // axios 发送 GET 请求
+      axios.get('http://127.0.0.1:3000/adata').then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 GET 请求
+      axios.get('http://127.0.0.1:3000/axios?id=1').then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 GET params请求
+      axios.get('http://127.0.0.1:3000/axios/1').then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 GET 对象方式请求 注意后端是用 req.query 来解析对象
+      axios.get('http://127.0.0.1:3000/axios', { params: { id: 2, name: 'lisi' } }).then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 DELETE 对象方式请求
+      axios.delete('http://127.0.0.1:3000/axios', { params: { id: 3, name: 'lisi' } }).then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 POST 对象方式请求 参数传递使用对象
+      // 请求头会自动设置成 Content-Type: application/json;charset=UTF-8
+      axios.post('http://127.0.0.1:3000/axios', { uname: 'wangwu', pwd: 456 }).then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 POST 对象方式请求 参数传递使用 URLSearchParams 实例对象
+      // 请求头会自动设置成 Content-Type: application/x-www-form-urlencoded;charset=UTF-8
+      const params = new URLSearchParams()
+      params.append('uname', 'liuliu')
+      params.append('pwd', '123')
+      axios.post('http://127.0.0.1:3000/axios', params).then((ret) => {
+        console.log(ret.data)
+      })
+
+      // axios 发送带参数 PUT 对象方式请求 参数传递使用对象
+      axios.put('http://127.0.0.1:3000/axios/4', { uname: 'wangwu', pwd: 789 }).then((ret) => {
+        console.log(ret.data)
+      })
+    </script>
+  </body>
+</html>
