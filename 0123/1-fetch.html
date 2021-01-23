@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      fetch('http://127.0.0.1:3000/fdata')
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+        .catch((err) => console.log(err))
+
+      fetch('http://127.0.0.1:3000/books?id=1', { method: 'GET' })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      fetch('http://127.0.0.1:3000/books/1', { method: 'GET' })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      fetch('http://127.0.0.1:3000/books/1', { method: 'DELETE' })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+    </script>
+  </body>
+</html>
