@@ -7,21 +7,50 @@
   </head>
   <body>
     <script>
+      // fetch 发请求
       fetch('http://127.0.0.1:3000/fdata')
         .then((data) => data.text())
         .then((data) => console.log(data))
         .catch((err) => console.log(err))
 
+      // fetch 发 GET 传统请求
       fetch('http://127.0.0.1:3000/books?id=1', { method: 'GET' })
         .then((data) => data.text())
         .then((data) => console.log(data))
 
+      // fetch 发 GET params请求
       fetch('http://127.0.0.1:3000/books/1', { method: 'GET' })
         .then((data) => data.text())
         .then((data) => console.log(data))
 
+      // fetch 发 DELETE params请求
       fetch('http://127.0.0.1:3000/books/1', { method: 'DELETE' })
         .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      // fetch 发 POST body请求
+      fetch('http://127.0.0.1:3000/books', { method: 'POST', body: 'uname=zs&pwd=18', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      // fetch 发 PUT body请求
+      fetch('http://127.0.0.1:3000/books/1', { method: 'PUT', body: 'uname=zs&pwd=18', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      // fetch 发 POST json格式数据请求
+      fetch('http://127.0.0.1:3000/books', { method: 'POST', body: JSON.stringify({ uname: 'ls', pwd: '123' }), headers: { 'Content-Type': 'application/json' } })
+        .then((data) => data.text())
+        .then((data) => console.log(data))
+
+      // fetch 发 GET 得到json数据的请求
+      fetch('http://127.0.0.1:3000/json?uanme=zs&pwd=456', { method: 'GET' })
+        // .then((data) => data.text())
+        // .then((data) => {
+        //   console.log(JSON.parse(data))
+        // })
+        // 或者
+        .then((data) => data.json())
         .then((data) => console.log(data))
     </script>
   </body>
