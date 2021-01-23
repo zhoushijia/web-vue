@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      .grid {
+        margin: auto;
+        width: 500px;
+        text-align: center;
+      }
+      .grid table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .grid th,
+      td {
+        padding: 10;
+        border: 1px dashed orange;
+        height: 35px;
+        line-height: 35px;
+      }
+      .grid th {
+        background-color: orange;
+      }
+      .grid .book {
+        padding-bottom: 10px;
+        padding-top: 5px;
+        background-color: #f3dcab;
+      }
+      .grid .total {
+        height: 30px;
+        line-height: 30px;
+        background-color: #f3dcab;
+        border-top: 1px solid #c2d89a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="managerBooks">
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <label for="id">图书id:</label><input type="text" id="id" v-model.trim="id" :disabled="flag" v-focus /> <label for="name">名称:</label><input type="text" id="name" v-model.trim="addName" />
+            <button @click="addBook" :disabled="submitFlag">提交</button>
+          </div>
+          <div class="total">总数: {{totalBook}}</div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr :key="item.id" v-for="(item,index) in books">
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.date | dateFormat}}</td>
+              <td><a href="javascript:;" @click.prevent="editBook(item.id)">修改</a> | <a href="javascript:;" @click.prevent="delBook(item.id)">删除</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      // 日期过滤器
+      Vue.filter('dateFormat', function (val) {
+        const date = new Date(val)
+        const y = date.getFullYear()
+        const m = (date.getMonth() + 1).toString().padStart(2, 0)
+        const d = date.getDate().toString().padStart(2, 0)
+        return y + '-' + m + '-' + d
+      })
+      // 自定义指令
+      Vue.directive('focus', {
+        inserted: function (el) {
+          el.focus()
+        }
+      })
+
+      // 请求初始化的配置文件
+      axios.defaults.baseURL = 'http://localhost:3000'
+      axios.interceptors.response.use(
+        (res) => res.data,
+        (err) => err
+      )
+      const vm = new Vue({
+        el: '#managerBooks',
+        data: {
+          //TODO: 用来标记是否是新增书籍/编辑图书
+          flag: false,
+          // TODO: 用来控制是否是新增书籍名字是否相同  有 bug 修改不了
+          submitFlag: false,
+          id: '',
+          addName: '',
+          books: []
+        },
+        methods: {
+          // 添加图书
+          async addBook() {
+            if (!this.flag) {
+              // this.submitFlag = !(this.id && this.addName && !this.books.some((item) => this.id == item.id && !this.books.some((item) => item.name == this.addName)))
+
+              if (this.id && this.addName && !this.books.some((item) => this.id == item.id) && !this.books.some((item) => item.name == this.addName)) {
+                const res = await axios.post('/books', { name: this.addName })
+                if (res.status == 200) {
+                  this.getBooks()
+                  console.log('添加成功')
+                }
+              } else {
+                alert('添加失败')
+              }
+            } else {
+              const res = await axios.put('/books/' + this.id, { name: this.addName })
+              if (res.status == 200) {
+                this.getBooks()
+                console.log('编辑成功')
+                this.flag = false
+              }
+            }
+            this.addName = ''
+            this.id = ''
+          },
+          // 编辑图书
+          async editBook(id) {
+            this.flag = true
+            const res = await axios.get('/books/' + id)
+            this.addName = res.name
+            this.id = id
+          },
+          // 删除图书
+          async delBook(id) {
+            if (confirm('你确认删除吗')) {
+              const res = await axios.delete('/books/' + id)
+              if (res.status == 200) {
+                this.getBooks()
+                console.log('删除成功')
+              }
+            }
+          },
+          // 发请求获取图书
+          async getBooks() {
+            this.books = await axios.get('/books')
+          }
+        },
+        computed: {
+          totalBook() {
+            return this.books.length
+          }
+        },
+        watch: {
+          addName: async function (val) {
+            const res = await axios.get('/books/book/' + val)
+            if (res.status == 1) {
+              this.submitFlag = true
+            } else {
+              this.submitFlag = false
+            }
+          }
+        },
+        created() {
+          this.getBooks()
+        }
+      })
+    </script>
+  </body>
+</html>
