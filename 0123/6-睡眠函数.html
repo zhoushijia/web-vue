@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // async/await 实现睡眠
+      // 睡眠函数
+      const sleep = (time) => new Promise((resolve, reject) => setTimeout(resolve, time))
+      ;(async () => {
+        await sleep(3000)
+        console.log(11111)
+      })()
+    </script>
+  </body>
+</html>
