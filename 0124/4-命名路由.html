@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/user/1">user1</router-link>
+      <router-link to="/user/2">user2</router-link>
+      <router-link to="/user/3">user3</router-link>
+      <!-- !:to 非to ; 对象与router对象中的属性名相同 params 对象 -->
+      <!-- <router-link :to="{name:'user',id:4}">user4</router-link> -->
+      <router-link :to="{name:'user',params:{id:4}}">user4</router-link>
+      <router-link to="/register">register</router-link>
+
+      <router-view></router-view>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+    <script>
+      const User = {
+        props: ['id', 'uname', 'age'],
+        template: `<h1>用户{{id}}信息,姓名：{{uname}},年龄：{{age}}</h1>`
+      }
+      const Register = {
+        template: `<h1>register信息</h1>`
+      }
+      const router = new VueRouter({
+        routes: [
+          { path: '/', redirect: '/user' },
+          // 动态路由方式三：
+          { path: '/user/:id', name: 'user', component: User, props: (route) => ({ id: route.params.id, uname: 'zs', age: 18 }) },
+          {
+            path: '/register',
+            component: Register
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        router
+      })
+    </script>
+  </body>
+</html>
