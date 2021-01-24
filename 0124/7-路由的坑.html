@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/user/aaa">aaa</router-link>
+      <router-link to="/user/bbb">bbb</router-link>
+
+      <router-view></router-view>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+
+    <script>
+      const router = new VueRouter({
+        routes: [
+          {
+            path: '/user/:name',
+            component: {
+              template: `<h1>{{$route.params.name}}</h1>`,
+              created() {
+                //   在该组件被触发的时候会 调用创建函数，则这个 $route.params.name 被打印，
+                //   此后再次触发组件，不会在触发创建函数，因此不能依靠这里来监听 $route
+                console.log(this.$route.params.name)
+              },
+              watch: {
+                //  监听 $route
+                $route: function (to, from) {
+                  // to   => 到哪里去的路由对象
+                  // from => 从哪里过来的路由对象
+                  console.log('去往' + to.params.name)
+                  console.log('来自' + from.params.name)
+                }
+              }
+            }
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        router
+      })
+    </script>
+  </body>
+</html>
