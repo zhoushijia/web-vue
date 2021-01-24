@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <a href="#/zhuye">主页</a>
+      <a href="#/caijing">财经</a>
+      <a href="#/tiyu">体育</a>
+      <a href="#/shenghuo">生活</a>
+
+      <!-- ! Vue 内置组件 组件占位符 寻找对应的组件名 -->
+      <component :is="comName"></component>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      const zhuye = {
+        template: `<h1>主页信息</h1>`
+      }
+      const caijing = {
+        template: `<h1>财经信息</h1>`
+      }
+      const tiyu = {
+        template: `<h1>体育信息</h1>`
+      }
+      const shenghuo = {
+        template: `<h1>生活信息</h1>`
+      }
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          comName: 'zhuye'
+        },
+        components: {
+          zhuye,
+          caijing,
+          tiyu,
+          shenghuo
+        }
+      })
+
+      //  锚点 hashchange 事件
+      window.onhashchange = function () {
+        //   将锚点信息给vue实例绑定的数据
+        vm.comName = location.hash.slice(2)
+      }
+    </script>
+  </body>
+</html>

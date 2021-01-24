@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- #1 路由链接 -->
+      <router-link to="/user">user</router-link>
+      <router-link to="/register">register</router-link>
+
+      <!-- #2 路由占位符 -->
+      <router-view></router-view>
+    </div>
+    <template id="register">
+      <div>
+        <h1>注册信息</h1>
+        <hr />
+        <!-- #5 子路由链接 -->
+        <router-link to="/register/t1">tab1</router-link>
+        <router-link to="/register/t2">tab2</router-link>
+        <!-- #6 子路由占位符 -->
+        <router-view></router-view>
+      </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+    <script>
+      // 定义子组件对象
+      const User = {
+        template: `<h1>用户信息</h1>`
+      }
+      const Register = {
+        template: `#register`
+      }
+      const Tab1 = {
+        template: `<h2>tab1...</h2>`
+      }
+      const Tab2 = {
+        template: `<h2>tab2...</h2>`
+      }
+      //  #3 定义路由规则
+      const router = new VueRouter({
+        //  TODO: routes 别写成 router
+        routes: [
+          //  TODO: User 不能加引号
+          //   { path: '/user', component: 'User' },
+
+          { path: '/', redirect: '/user' },
+          { path: '/user', component: User },
+          {
+            path: '/register',
+            component: Register,
+            children: [
+              // { path: '/register/t1', component: Tab1 },
+              // { path: '/register/t2', component: Tab2 }
+              //   如果不加父路径 ，就不要再加 /
+              { path: '/', redirect: 't1' },
+              { path: 't1', component: Tab1 },
+              { path: 't2', component: Tab2 }
+            ]
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        //  #4 父组件挂载路由
+        router
+      })
+    </script>
+  </body>
+</html>
