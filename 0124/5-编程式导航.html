@@ -40,7 +40,7 @@
                 uname: '哒哒哒'
               }
             }) */
-            // #3 name 结合 query 使用, name 不能结合 params 使用
+            // #3 name 结合 query 使用, name 能结合 params 使用
             /* this.$router.push({
               name: 'register',
               query: {
@@ -48,14 +48,14 @@
                 uname: '哒哒哒'
               }
             }) */
-            // #4 name 不能结合 params 使用
-            /*  this.$router.push({
-              path: '/register',
+            // #4 name 能结合 params 使用
+            this.$router.push({
+              name: 'register',
               params: {
                 id: 111,
                 uname: '哒哒哒'
               }
-            }) */
+            })
           }
         }
       }
@@ -64,7 +64,6 @@
         template: `<div>
                     <h1>register信息</h1>
                     <h2>用户{{$route.params.id}}信息,姓名：{{$route.params.uname}}</h2>
-                   <!-- <h2>用户{{$route.query.id}}信息,姓名：{{$route.query.uname}}</h2> -->
                     <button @click='goBack'>后退</button>
                     </div>`,
         methods: {
@@ -79,7 +78,8 @@
           { path: '/', redirect: '/user/1' },
           { path: '/user/:id', name: 'user', component: User, props: (route) => ({ id: route.params.id, uname: 'zs', age: 18 }) },
           {
-            path: '/register',
+            path: '/register/:id',
+            // path: '/register',
             name: 'register',
             component: Register
             // props: (route) => ({ id: route.query.id, route.query.uname: 'zs' })  // 不能这样写

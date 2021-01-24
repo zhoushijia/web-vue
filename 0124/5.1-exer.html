@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/user">user</router-link>
+      <router-link :to="{name:'login',params:{id:1}}">login1</router-link>
+      <router-link :to="{name:'login',params:{id:2}}">login2</router-link>
+      <router-link :to="{name:'login',params:{id:3}}">login3</router-link>
+
+      <router-view></router-view>
+    </div>
+
+    <template id="user">
+      <div>
+        <h1>user...</h1>
+        <button @click="handler">跳转到login</button>
+        <hr />
+        <router-link to="/aaa/1">aaa1</router-link>
+        <router-link to="/aaa/2">aaa2</router-link>
+
+        <router-view></router-view>
+      </div>
+    </template>
+
+    <template id="login">
+      <div>
+        <h1>login...{{$route.params.id}}</h1>
+        <h1 v-if="$route.params.name">login...{{$route.params.name}}</h1>
+        <hr />
+        <button @click="$router.go(-1)">返回</button>
+      </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+    <script>
+      const User = {
+        template: '#user',
+        methods: {
+          handler() {
+            this.$router.push({
+              /*  path: '/login/4',
+              query: {
+                name: 'dadada'
+              } */
+              /*  name: 'login',
+              query: {
+                id: 4,
+                name: 'ddd'
+              } */
+              name: 'login',
+              params: {
+                id: 4,
+                name: 'dadada'
+              }
+            })
+          }
+        }
+      }
+      const Login = {
+        template: '#login'
+      }
+      const Aaa = {
+        template: '<h1>Aaa---{{$route.params.id}}</h1>'
+      }
+      const router = new VueRouter({
+        routes: [
+          { path: '/', redirect: '/user' },
+          { path: '/user', component: User, children: [{ path: '/aaa/:id', component: Aaa }] },
+          { path: '/login/:id', name: 'login', component: Login }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        router
+      })
+    </script>
+  </body>
+</html>

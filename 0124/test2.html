@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<body>
+    <div id="app">
+        <!-- 入口 -->
+        <router-link to="/user/ifer">ifer</router-link>
+        <router-link to="/user/elser">elser</router-link>
+
+        <!-- 出口 -->
+        <router-view></router-view>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
+    <script>
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: '/user/:username',
+                    component: {
+                        template: '<div>{{$route.params.username}}</div>',
+                        created() {
+                            // 如果上面模板种的数据有变化，是会重新编译的
+                            // 这个组件只会创建一次，即便路由当中的参数变化了，这里也不能实时获取到最新的
+                            console.log(this.$route.params.username);
+                        },
+                        watch: {
+                            $route(to, from) {
+                                // to   => 到哪里去的路由对象
+                                // from => 从哪里过来的路由对象
+                                console.log(to.params.username);
+                            }
+                        }
+                    }
+                }
+            ]
+        })
+        const vm = new Vue({
+            el: '#app',
+            name: 'App',
+            router
+        });
+    </script>
+</body>
+
+</html>
