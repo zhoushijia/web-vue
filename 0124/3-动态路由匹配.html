@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- #1 路由链接 -->
+      <router-link to="/user/1">user1</router-link>
+      <router-link to="/user/2">user2</router-link>
+      <router-link to="/user/3">user3</router-link>
+      <router-link to="/user/4">user4</router-link>
+      <router-link to="/register">register</router-link>
+
+      <!-- #2 路由占位符 -->
+      <router-view></router-view>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+    <script>
+      // 定义子组件对象
+      const User = {
+        // 动态路由接受参数方式一：
+        // template: `<h1>用户{{$route.params.id}}信息</h1>`
+        // 动态路由接受参数方式二：
+        // props: ['id'],
+        // template: `<h1>用户{{id}}信息</h1>`
+        // 动态路由接受参数方式三：
+        props: ['id', 'uname', 'age'],
+        template: `<h1>用户{{id}}信息,姓名：{{uname}},年龄：{{age}}</h1>`
+        // 动态路由接受参数方式四：
+        // props: ['id', 'uname', 'age'],
+        // template: `<h1>用户{{id}}信息,姓名：{{uname}},年龄：{{age}}</h1>`
+      }
+      const Register = {
+        template: `<h1>register信息</h1>`
+      }
+      //  #3 定义路由规则
+      const router = new VueRouter({
+        //  TODO: routes 别写成 router
+        routes: [
+          { path: '/', redirect: '/user' },
+          // 动态路由方式一：
+          //   { path: '/user/:id', component: User },
+          // 动态路由方式二：
+          //   { path: '/user/:id', component: User, props: true },
+          // 动态路由方式三：
+          { path: '/user/:id', component: User, props: (route) => ({ id: route.params.id, uname: 'zs', age: 18 }) },
+          // 动态路由方式四：
+          //   { path: '/user/:id', component: User, props: { uname: 'zs', age: 18 } },
+
+          {
+            path: '/register',
+            component: Register
+          }
+        ]
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {},
+        //  #4 父组件挂载路由
+        router
+      })
+    </script>
+  </body>
+</html>
