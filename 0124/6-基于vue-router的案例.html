@@ -142,10 +142,12 @@
         <h1>用户管理</h1>
         <table>
           <thead>
-            <th>编号</th>
-            <th>姓名</th>
-            <th>年龄</th>
-            <th>操作</th>
+            <tr>
+              <th>编号</th>
+              <th>姓名</th>
+              <th>年龄</th>
+              <th>操作</th>
+            </tr>
           </thead>
           <tbody>
             <tr :key="item.id" v-for="item in userList">
