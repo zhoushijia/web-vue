@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <div>
+              <label for="id"> 编号： </label>
+              <input type="text" id="id" v-model.number.trim.lazy="id" v-focus :disabled="flag" />
+              <label for="name"> 名称： </label>
+              <input type="text" id="name" v-model.trim="name" />
+              <button @click="addBooks" :disabled="submitFlag">提交</button>
+            </div>
+          </div>
+        </div>
+        <div class="total">
+          <span>图书总数：</span>
+          <span>{{total}}</span>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr :key="item.id" v-for="item in books">
+              <td>{{item.id}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.date | dateFormat}}</td>
+              <td><a href="javascript:;" @click.prevent="edit(item.id)">编辑</a> | <a href="javascript:;" @click.prevent="del(item.id)">删除</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.min.js"></script>
+
+    <script>
+      // 请求拦截器
+      // axios.defaults.baseURL = 'http://localhost:3000'
+      axios.interceptors.request.use(
+        (config) => {
+          config.url = 'http://localhost:3000' + config.url
+          return config
+        },
+        (err) => err
+      )
+
+      // 响应拦截器
+      axios.interceptors.response.use(
+        (res) => res.data,
+        (err) => err
+      )
+
+      Vue.filter('dateFormat', function (val) {
+        const date = new Date(val)
+        const y = date.getFullYear()
+        const m = (date.getMonth() + 1).toString().padStart(2, 0)
+        const d = date.getDate().toString().padStart(2, 0)
+        return y + '-' + m + '-' + d
+      })
+
+      Vue.directive('focus', {
+        inserted: function (el) {
+          el.focus()
+        }
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: { id: '', name: '', flag: false, submitFlag: false, timer: null, books: [] },
+        methods: {
+          // 增加图书
+          async addBooks() {
+            if (this.flag) {
+              const res = await axios.put('/books/' + this.id, {
+                name: this.name
+              })
+              if (res.status == 200) {
+                this.getBooks()
+              }
+            } else {
+              const res = await axios.post('/books', { name: this.name })
+              if (res.status == 200) {
+                this.getBooks()
+              }
+            }
+            this.id = ''
+            this.name = ''
+          },
+          // 编辑
+          async edit(id) {
+            const res = await axios.get('/books/' + id)
+            this.id = res.id
+            this.name = res.name
+            this.flag = true
+          },
+          async del(id) {
+            const res = await axios.delete('/books/' + id)
+            if (res.status == 200) {
+              this.getBooks()
+            }
+          },
+          // 从后端获取数据
+          async getBooks() {
+            this.books = await axios.get('/books')
+          }
+          // 验证图书
+        },
+
+        computed: {
+          total() {
+            return this.books.length
+          }
+        },
+        watch: {
+          name: function (val) {
+            // 防抖
+            clearTimeout(this.timer)
+            this.timer = setTimeout(async () => {
+              const res = await axios.get('/books/book/' + val)
+              if (res.status == 1) {
+                console.log('图书已经存在')
+                this.submitFlag = true
+              } else {
+                this.submitFlag = false
+              }
+            }, 500)
+          }
+        },
+        mounted: function () {
+          this.getBooks()
+        }
+      })
+    </script>
+  </body>
+</html>
