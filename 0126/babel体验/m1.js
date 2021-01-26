@@ -1,5 +1,6 @@
 const a = 1
 const b = ['a', 'b', 'c']
+const c = 'dadada'
 
 function show() {
   console.log(222)
@@ -10,11 +11,12 @@ function show() {
 export default {
   a,
   b,
+  c,
   show
 }
 
 export let ab = 'ab'
 export let ac = 'ac'
-export let doSome = () => {
+export function doSome() {
   console.log('doSome')
 }
