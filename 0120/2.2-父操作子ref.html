@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <test-com ref="testcom"></test-com>
+      <button @click="changeComValue">操作子元素中的value值</button>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.js"></script>
+    <script>
+      Vue.component('test-com', {
+        data: function () {
+          return {
+            value: 0
+          }
+        },
+        methods: {
+          changeValue() {
+            this.value++
+          }
+        },
+        template: `<div><h1>{{value}}</h1></div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        methods: {
+          changeComValue() {
+            this.$refs.testcom.changeValue()
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
