@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>{{value}}</div>
+      <!-- <test :value="value" @input="value++"></test> -->
+      <test v-model="value"></test>
+    </div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.4.8/vue-router.js"></script>
+    <script>
+      Vue.component('test', {
+        /*  model: {
+          prop: 'num', // 改变传过来的默认的 value
+          event: 'change' // 改变传过来的默认的自定义事件 input
+        }, */
+        props: ['value'],
+        data() {
+          return {}
+        },
+        methods: {
+          handler() {
+            this.$emit('input', this.value++)
+          }
+        },
+        template: `<div><h1 @click="handler">{{value}}</h1></div>`
+      })
+      const vm = new Vue({
+        el: '#app',
+        data: {
+          value: 1
+        },
+        methods: {}
+      })
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<body>
+    <div id="app">
+        <p>{{name}}</p>
+        <p>{{age}}</p>
+        <!-- <test @change="name=$event"></test> -->
+        <!-- <test @input="name=$event"></test> -->
+        <!-- v-model 隐藏的有一句 @input="name=$event" -->
+        <!-- v-model 确实可以简写，但是只能有这么一次 -->
+        <!-- <test v-model="name"></test> -->
+
+        <!-- <test @update:name="name=$event"></test> -->
+        <!-- 下面这样写，和上面等价！ -->
+
+        <!-- 这个 :name 一定和子组件里面的 update:name 保持一致 -->
+        <!-- <test :name.sync="name"></test> -->
+        <!-- .sync 这种简写，可以写任意多次 -->
+        <test :xxx.sync="name" :yyy.sync="age"></test>
+    </div>
+    <template id="test">
+        <div>
+            <!-- 这个 update 是固定的写法！ -->
+            <button @click="$emit('update:xxx', 'elser')">按钮</button>
+            <button @click="$emit('update:yyy', 88)">按钮</button>
+        </div>
+    </template>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
+    <script>
+        Vue.component('test', {
+            template: '#test'
+        });
+        // 子改父的数据
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                name: 'ifer',
+                age: 18
+            }
+        });
+    </script>
+</body>
+
+</html>
