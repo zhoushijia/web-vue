@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<body>
+    <div id="app">
+        <p>{{msg}}</p>
+        <test></test>
+        <button @click="handleClick">change child</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
+    <script>
+        Vue.component('test', {
+            data() {
+                return {
+                    age: 18
+                }
+            },
+            template: `
+                <div>
+                    <p>{{age}}</p>
+                    <button @click="handleClick">click</button>    
+                </div>
+            `,
+            methods: {
+                handleClick() {
+                    this.$parent.changeMsg('ifer');
+                },
+            },
+        });
+        const vm = new Vue({
+            el: '#app',
+            name: 'App',
+            data: {
+                msg: 'hello world'
+            },
+            methods: {
+                changeMsg(msg) {
+                    this.msg = msg;
+                },
+                handleClick() {
+                    // this.$children[0] 第 1 个子组件
+                    this.$children[0].age = 19;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

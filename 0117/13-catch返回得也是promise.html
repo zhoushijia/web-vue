@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* new Promise((resolve, reject) => {
+            reject(new Error('失败了'));
+        }).catch(e => {
+            console.log(e.message);
+        }); */
+
+        /* new Promise((resolve, reject) => {
+            reject(new Error('失败了'));
+        }).catch(e => {
+            console.log(e.message);
+            return Promise.resolve(undefined);
+        }).then(r => {
+            // ?
+            console.log(r);
+        }); */
+
+        /* new Promise((resolve, reject) => {
+            reject(new Error('失败了'));
+        }).catch(e => e.message).then(r => {
+            console.log(r);
+        }); */
+
+        ; (async () => {
+            const r = await new Promise((resolve, reject) => {
+                reject(new Error('失败了'));
+            }).catch(e => e.message)
+            console.log(r);
+        })();
+    </script>
+</body>
+
+</html>
