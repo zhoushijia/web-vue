@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<body>
+    <div id="app">
+        <!-- 入口 -->
+        <router-link to="/user">User</router-link>
+        <router-link to="/news">News</router-link>
+
+        <!-- 出口 -->
+        <!-- <keep-alive :include="['User']"> -->
+        <keep-alive :exclude="['News']">
+            <router-view></router-view>
+        </keep-alive>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
+    <script>
+        const User = {
+            name: 'User',
+            template: `<div>User</div>`,
+            created() {
+                // 用了组件缓存之后，这里的钩子就不再走了，不能直接在这里做请求数据的操作了
+                // 请求数据
+                console.log('请求数据');
+            },
+        };
+
+        // 正常情况下，每次进行路由的切换的时候，不会保持之前的状态（数据）
+
+        // 怎么保留之前的数据状态呢？（保留的目的一般都是用来提高性能）
+
+        // 需要用到组件缓存
+        const News = {
+            name: 'News',
+            template: `<div>
+                <p :style="{ color: color }">News</p>
+                <button @click="changeColor">变色</button>
+            </div>`,
+            data() {
+                return {
+                    color: 'red'
+                };
+            },
+            methods: {
+                changeColor() {
+                    this.color = 'blue';
+                }
+            },
+            created() {
+                // 用了组件缓存之后，这里的钩子就不再走了，不能直接在这里做请求数据的操作了
+                // 请求数据
+                console.log('请求数据');
+            },
+            // 这两个钩子是和组件缓存相关的，一般配合组件缓存去使用
+            activated() {
+                // 激活的时候会触发
+                console.log('激活');
+            },
+            deactivated() {
+                console.log('失活');
+            },
+        };
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: '/user',
+                    component: User
+                },
+                {
+                    path: '/news',
+                    component: News
+                },
+            ]
+        })
+
+        const vm = new Vue({
+            el: '#app',
+            name: 'App',
+            router
+        });
+    </script>
+</body>
+
+</html>
