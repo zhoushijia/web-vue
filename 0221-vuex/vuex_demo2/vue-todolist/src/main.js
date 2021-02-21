@@ -4,6 +4,8 @@ import App from './App.vue'
 import Antd from 'ant-design-vue'
 // #2
 import 'ant-design-vue/dist/antd.css'
+// ! 必须引入 store 不然没法使用 vuex
+import store from './store/index'
 
 Vue.config.productionTip = false
 
@@ -11,5 +13,6 @@ Vue.config.productionTip = false
 Vue.use(Antd)
 
 new Vue({
+  store,
   render: h => h(App)
 }).$mount('#app')

@@ -29,10 +29,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'app',
   data() {
     return {}
+  },
+  computed: {
+    ...mapState(['list'])
+  },
+  created() {
+    // 触发 vuex 发请求 获取后端数据
+    this.$store.dispatch('getListAsync')
   }
 }
 </script>
