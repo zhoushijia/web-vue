@@ -11,7 +11,10 @@
     <h3>{{ count8 }}</h3>
     <!-- #4 -->
     <h3>{{ countPlusLocal }}</h3>
+    <h3>{{ $store.getters.countChange }}</h3>
     <button @click="addCount">+1</button>
+    <button @click="addNCount">+n</button>
+    <button @click="$store.dispatch('addNAsync', 2)">+n 异步</button>
   </div>
 </template>
 
@@ -42,8 +45,20 @@ export default {
   }),
   methods: {
     addCount() {
-      // 通知 vuex 修改数据
+      // 通知 vuex 修改数据 参数传递
       this.$store.commit('add')
+    },
+    addNCount() {
+      // 通知 vuex 修改数据 并 参数传递
+      // #1
+      this.$store.commit('addN', 10)
+      // #2 对象传值
+      // this.$store.commit('addN', { n: 10 })
+      // #3 type对象形式传递
+      /* this.$store.commit({
+        type: 'addN',
+        n: 10
+      }) */
     }
   }
 }
