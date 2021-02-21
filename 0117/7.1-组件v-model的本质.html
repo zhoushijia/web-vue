@@ -26,7 +26,7 @@
         },
         methods: {
           handler() {
-            this.$emit('input', this.value++)
+            this.$emit('input', this.value + 1)
           }
         },
         template: `<div><h1 @click="handler">{{value}}</h1></div>`

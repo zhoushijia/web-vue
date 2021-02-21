@@ -21,7 +21,7 @@
                 event: 'change', // 改变传过来的默认的自定义事件 input
             },
             props: ['num'],
-            template: `<div>hello<button @click="$emit('change', num+1)">修改数据</button></div>`
+            template: `<div>hello{{num}}<button @click="$emit('change', num+1)">修改数据</button></div>`
         });
         // 父组件传递数据到子组件，子组件再修改这个数据
         const vm = new Vue({
