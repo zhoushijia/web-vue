@@ -6,12 +6,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    list: []
+    list: [],
+    inputVal: ''
   },
   mutations: {
     // 操作数据state
     getList(state, payload) {
       state.list = payload
+    },
+    // input 框数据变更
+    setInputVal(state, val) {
+      state.inputVal = val
     }
   },
   actions: {

@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <a-input placeholder="请输入任务" class="my_ipt" />
+    <a-input
+      placeholder="请输入任务"
+      class="my_ipt"
+      :value="inputVal"
+      @change="handler"
+    />
     <a-button type="primary">添加事项</a-button>
 
     <a-list bordered :dataSource="list" class="dt_list">
@@ -35,8 +40,14 @@ export default {
   data() {
     return {}
   },
+  methods: {
+    // 收集数据
+    handler(e) {
+      this.$store.commit('setInputVal', e.target.value)
+    }
+  },
   computed: {
-    ...mapState(['list'])
+    ...mapState(['list', 'inputVal'])
   },
   created() {
     // 触发 vuex 发请求 获取后端数据
