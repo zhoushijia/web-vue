@@ -34,16 +34,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'app',
   data() {
     return {}
   },
   methods: {
+    ...mapMutations(['setInputVal']),
     // 收集数据
     handler(e) {
-      this.$store.commit('setInputVal', e.target.value)
+      // this.$store.commit('setInputVal', e.target.value)
+      // 或者
+      this.setInputVal(e.target.value)
     }
   },
   computed: {
