@@ -12,7 +12,7 @@
     <a-list bordered :dataSource="list" class="dt_list">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- 复选框 -->
-        <!-- 这里的 e => { cbStatusChange(e, item.id) } 是为了拿到事件对象 -->
+        <!-- TODO: 这里的 e => { cbStatusChange(e, item.id) } 是为了拿到事件对象; e 是形参 而cbStatusChange(e, item.id)中的e是实参 -->
         <a-checkbox
           :check="item.done"
           @change="
