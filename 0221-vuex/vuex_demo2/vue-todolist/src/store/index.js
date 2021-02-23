@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     list: [],
     inputVal: '',
-    nextId: 5
+    nextId: 5,
+    viewkey: 'all'
   },
   mutations: {
     // #1 操作数据state
@@ -42,6 +43,10 @@ export default new Vuex.Store({
     // #7 清除已完成
     cleanDone(state) {
       state.list = state.list.filter(item => !item.done)
+    },
+    // #8 设置viewkey
+    setViewkey(state, key) {
+      state.viewkey = key
     }
   },
   actions: {
@@ -57,6 +62,16 @@ export default new Vuex.Store({
     // #6 未完成个数
     unDoneLength(state) {
       return state.list.filter(item => !item.done).length
+    },
+    // #9 按需求获取列表数据
+    initRequireList(state) {
+      if (state.viewkey === 'all') {
+        return state.list
+      } else if (state.viewkey === 'undone') {
+        return state.list.filter(item => !item.done)
+      } else {
+        return state.list.filter(item => item.done)
+      }
     }
   },
   modules: {}

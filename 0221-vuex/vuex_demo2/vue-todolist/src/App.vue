@@ -9,7 +9,7 @@
     <a-button type="primary" @click="addItem">添加事项</a-button>
 
     <!-- #1 -->
-    <a-list bordered :dataSource="list" class="dt_list">
+    <a-list bordered :dataSource="initRequireList" class="dt_list">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- 复选框 -->
         <!-- TODO: 这里的 e => { cbStatusChange(e, item.id) } 是为了拿到事件对象; e 是形参 而cbStatusChange(e, item.id)中的e是实参 -->
@@ -29,12 +29,25 @@
       <!-- footer区域 -->
       <div slot="footer" class="footer">
         <!-- #6 未完成的任务个数 -->
-        <span>{{ unDoneLength }}条剩余</span>
+        <span>{{ unDoneLength }}条未完成</span>
         <!-- 操作按钮 -->
+        <!-- #8 按需求获取列表数据 -->
         <a-button-group>
-          <a-button type="primary">全部</a-button>
-          <a-button>未完成</a-button>
-          <a-button>已完成</a-button>
+          <a-button
+            :type="viewkey === 'all' ? 'primary' : 'default'"
+            @click="setKey('all')"
+            >全部</a-button
+          >
+          <a-button
+            :type="viewkey === 'undone' ? 'primary' : 'default'"
+            @click="setKey('undone')"
+            >未完成</a-button
+          >
+          <a-button
+            :type="viewkey === 'done' ? 'primary' : 'default'"
+            @click="setKey('done')"
+            >已完成</a-button
+          >
         </a-button-group>
         <!-- #7 把已经完成的任务清空 -->
         <a @click="clean">清除已完成</a>
@@ -81,11 +94,15 @@ export default {
     // #7 清除已完成
     clean() {
       this.$store.commit('cleanDone')
+    },
+    // #8 设置viewkey
+    setKey(key) {
+      this.$store.commit('setViewkey', key)
     }
   },
   computed: {
-    ...mapState(['list', 'inputVal']),
-    ...mapGetters(['unDoneLength'])
+    ...mapState(['list', 'inputVal', 'viewkey']),
+    ...mapGetters(['unDoneLength', 'initRequireList'])
   },
   created() {
     // 触发 vuex 发请求 获取后端数据
