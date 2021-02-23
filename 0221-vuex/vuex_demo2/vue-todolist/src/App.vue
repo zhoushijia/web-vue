@@ -12,7 +12,16 @@
     <a-list bordered :dataSource="list" class="dt_list">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- 复选框 -->
-        <a-checkbox>{{ item.info }}</a-checkbox>
+        <!-- 这里的 e => { cbStatusChange(e, item.id) } 是为了拿到事件对象 -->
+        <a-checkbox
+          :check="item.done"
+          @change="
+            e => {
+              cbStatusChange(e, item.id)
+            }
+          "
+          >{{ item.info }}</a-checkbox
+        >
         <!-- 删除链接 -->
         <a slot="actions" @click="removeItemById(item.id)">删除</a>
       </a-list-item>
@@ -52,7 +61,7 @@ export default {
     // #3 添加数据
     addItem() {
       if (this.inputVal.trim().length <= 0) {
-        this.$message.warn('请输入数据')
+        this.$message.warning('请输入数据')
         return
       }
       this.$store.commit('addItem')
@@ -60,6 +69,14 @@ export default {
     // #4 删除数据
     removeItemById(id) {
       this.$store.commit('removeItem', id)
+    },
+    // #5 修改状态
+    cbStatusChange(e, id) {
+      const payload = {
+        id,
+        status: e.target.checked
+      }
+      this.$store.commit('statusChange', payload)
     }
   },
   computed: {

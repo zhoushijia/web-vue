@@ -23,7 +23,7 @@ export default new Vuex.Store({
     addItem(state) {
       const obj = {
         id: state.nextId++,
-        info: state.inputVal,
+        info: state.inputVal.trim(),
         done: false
       }
       state.list.push(obj)
@@ -32,6 +32,11 @@ export default new Vuex.Store({
     // #4 删除数据
     removeItem(state, id) {
       state.list = state.list.filter(item => item.id !== id)
+    },
+    // #5 修改状态
+    statusChange(state, payload) {
+      const i = state.list.findIndex(item => item.id === payload.id)
+      if (i !== -1) state.list[i].done = payload.status
     }
   },
   actions: {
