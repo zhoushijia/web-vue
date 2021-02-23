@@ -11,7 +11,7 @@ export default new Vuex.Store({
     nextId: 5
   },
   mutations: {
-    // 操作数据state
+    // #1 操作数据state
     getList(state, payload) {
       state.list = payload
     },
@@ -21,6 +21,7 @@ export default new Vuex.Store({
     },
     // #3 添加数据
     addItem(state) {
+      // 根据后台文件，数据必须以对象存储
       const obj = {
         id: state.nextId++,
         info: state.inputVal.trim(),
@@ -37,6 +38,10 @@ export default new Vuex.Store({
     statusChange(state, payload) {
       const i = state.list.findIndex(item => item.id === payload.id)
       if (i !== -1) state.list[i].done = payload.status
+    },
+    // #7 清除已完成
+    cleanDone(state) {
+      state.list = state.list.filter(item => !item.done)
     }
   },
   actions: {
@@ -46,6 +51,12 @@ export default new Vuex.Store({
       const { data } = await axios.get('/list.json')
       // mutation 操作数据
       commit('getList', data)
+    }
+  },
+  getters: {
+    // #6 未完成个数
+    unDoneLength(state) {
+      return state.list.filter(item => !item.done).length
     }
   },
   modules: {}

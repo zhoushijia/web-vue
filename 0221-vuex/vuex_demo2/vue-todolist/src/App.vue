@@ -14,7 +14,7 @@
         <!-- 复选框 -->
         <!-- TODO: 这里的 e => { cbStatusChange(e, item.id) } 是为了拿到事件对象; e 是形参 而cbStatusChange(e, item.id)中的e是实参 -->
         <a-checkbox
-          :check="item.done"
+          :checked="item.done"
           @change="
             e => {
               cbStatusChange(e, item.id)
@@ -28,23 +28,23 @@
 
       <!-- footer区域 -->
       <div slot="footer" class="footer">
-        <!-- 未完成的任务个数 -->
-        <span>0条剩余</span>
+        <!-- #6 未完成的任务个数 -->
+        <span>{{ unDoneLength }}条剩余</span>
         <!-- 操作按钮 -->
         <a-button-group>
           <a-button type="primary">全部</a-button>
           <a-button>未完成</a-button>
           <a-button>已完成</a-button>
         </a-button-group>
-        <!-- 把已经完成的任务清空 -->
-        <a>清除已完成</a>
+        <!-- #7 把已经完成的任务清空 -->
+        <a @click="clean">清除已完成</a>
       </div>
     </a-list>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 export default {
   name: 'app',
   data() {
@@ -77,10 +77,15 @@ export default {
         status: e.target.checked
       }
       this.$store.commit('statusChange', payload)
+    },
+    // #7 清除已完成
+    clean() {
+      this.$store.commit('cleanDone')
     }
   },
   computed: {
-    ...mapState(['list', 'inputVal'])
+    ...mapState(['list', 'inputVal']),
+    ...mapGetters(['unDoneLength'])
   },
   created() {
     // 触发 vuex 发请求 获取后端数据
