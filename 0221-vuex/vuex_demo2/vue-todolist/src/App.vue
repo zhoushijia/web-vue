@@ -6,14 +6,15 @@
       :value="inputVal"
       @change="handler"
     />
-    <a-button type="primary">添加事项</a-button>
+    <a-button type="primary" @click="addItem">添加事项</a-button>
 
+    <!-- #1 -->
     <a-list bordered :dataSource="list" class="dt_list">
       <a-list-item slot="renderItem" slot-scope="item">
         <!-- 复选框 -->
         <a-checkbox>{{ item.info }}</a-checkbox>
         <!-- 删除链接 -->
-        <a slot="actions">删除</a>
+        <a slot="actions" @click="removeItemById(item.id)">删除</a>
       </a-list-item>
 
       <!-- footer区域 -->
@@ -42,11 +43,23 @@ export default {
   },
   methods: {
     ...mapMutations(['setInputVal']),
-    // 收集数据
+    // #2 收集数据
     handler(e) {
       // this.$store.commit('setInputVal', e.target.value)
       // 或者
       this.setInputVal(e.target.value)
+    },
+    // #3 添加数据
+    addItem() {
+      if (this.inputVal.trim().length <= 0) {
+        this.$message.warn('请输入数据')
+        return
+      }
+      this.$store.commit('addItem')
+    },
+    // #4 删除数据
+    removeItemById(id) {
+      this.$store.commit('removeItem', id)
     }
   },
   computed: {

@@ -7,16 +7,31 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     list: [],
-    inputVal: ''
+    inputVal: '',
+    nextId: 5
   },
   mutations: {
     // 操作数据state
     getList(state, payload) {
       state.list = payload
     },
-    // input 框数据变更
+    // #2 input 框数据变更
     setInputVal(state, val) {
       state.inputVal = val
+    },
+    // #3 添加数据
+    addItem(state) {
+      const obj = {
+        id: state.nextId++,
+        info: state.inputVal,
+        done: false
+      }
+      state.list.push(obj)
+      state.inputVal = ''
+    },
+    // #4 删除数据
+    removeItem(state, id) {
+      state.list = state.list.filter(item => item.id !== id)
     }
   },
   actions: {
