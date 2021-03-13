@@ -7,12 +7,13 @@
   </head>
   <body>
     <div id="app">
+      <!-- 入口 -->
       <a href="#/zhuye">主页</a>
       <a href="#/caijing">财经</a>
       <a href="#/tiyu">体育</a>
       <a href="#/shenghuo">生活</a>
 
-      <!-- ! Vue 内置组件 组件占位符 寻找对应的组件名 -->
+      <!-- ! Vue 内置组件 组件占位符 寻找对应的组件名 出口 -->
       <component :is="comName"></component>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

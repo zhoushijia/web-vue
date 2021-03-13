@@ -14,21 +14,21 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
     <script>
+        // 父亲
         Vue.component('test1', {
             template: '<div>test1 <test2></test2></div>'
         });
-
+        // 儿子
         Vue.component('test2', {
             // #2 接受数据
             inject: ['msg'],
             template: '<div>test2 {{msg}}</div>'
         });
+        // 爷爷
         const vm = new Vue({
             el: '#app',
             name: 'App',
-            data: {
-                
-            },
+            data: {},
             // #1 提供数据
             provide: {
                 msg: 'hello'

@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-router@3.4.3/dist/vue-router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js"></script>
     <script>
+        // 儿子
         Vue.component('test', {
             template: `<div>
                 <p>{{$attrs.msg}}</p>  
@@ -22,8 +23,7 @@
             mounted() {
             },
         });
-
-
+        // 父亲
         const vm = new Vue({
             el: '#app',
             name: 'App',
